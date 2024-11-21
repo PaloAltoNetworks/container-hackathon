@@ -1,0 +1,62 @@
+name: "App: Java Container Prod Build"
+
+on:
+  pull_request:
+    paths: 
+      - 'containers/javaapp/**'
+
+jobs:
+    build:
+        name: "Prod Image Build"
+        runs-on: ubuntu-latest
+        env:
+          environment: prod
+          imagetag: "latest"
+          containerpath: "containers/javaapp"
+          registry: "ghcr.io/${{ github.repository_owner }}"
+        permissions: 
+          contents: read
+          packages: write
+          attestations: write
+          id-token: write
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Docker Login
+              uses: azure/docker-login@v2
+              with:
+                login-server: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}                   
+
+            - name: Convert Organization Name to Lowercase
+              run: echo "registry_name=$(echo $registry | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV                  
+              
+            - name: Install Twistlock
+              id: download-twistlock
+              working-directory: ${{ env.containerpath }}
+              run: |
+                sudo curl -k -u ${{ secrets.PC_KEY }}:${{ secrets.PC_SECRET }} -L -o twistcli ${{ secrets.PC_CONSOLE }}/api/v1/util/twistcli
+                sudo chmod a+x ./twistcli
+
+            - name: Build and Tag Image
+              id: container-build
+              working-directory: ${{ env.containerpath }}
+              run: | 
+                docker build --target $environment -t ${{ env.registry_name }}/$(basename $containerpath):$imagetag .
+
+            - name: Prisma Cloud Image scan
+              id: image-scan
+              working-directory: ${{ env.containerpath }}
+              run: | 
+                sudo ./twistcli images scan --address ${{ secrets.PC_CONSOLE }} --user ${{ secrets.PC_KEY }} --password ${{ secrets.PC_SECRET }} --details --job ${{ github.run_id }} --build ${{ github.workspace }} ${{ env.registry_name }}/$(basename $containerpath):$imagetag
+
+            - name: Prisma Cloud Image Sandbox
+              id: image-sandbox
+              working-directory: ${{ env.containerpath }}
+              run: | 
+                sudo ./twistcli sandbox --address ${{ secrets.PC_CONSOLE }} --user ${{ secrets.PC_KEY }} --password ${{ secrets.PC_SECRET }} ${{ env.registry_name }}/$(basename $containerpath):$imagetag
+
+            - name: Push Images to Container Registry
+              run: |
+                docker push ${{ env.registry_name }}/$(basename $containerpath):$imagetag
