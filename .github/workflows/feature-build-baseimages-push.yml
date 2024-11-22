@@ -1,7 +1,6 @@
 name: "Base Image: Java - Dev Build"
 
 on:
-  workflow_dispatch: 
   push: 
     paths:
       - 'baseimages/java/**' 
