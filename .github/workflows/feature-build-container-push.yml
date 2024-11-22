@@ -1,4 +1,4 @@
-name: "App: Java Container Dev Build"
+name: "Dev Build: Java App Container"
 
 on:
   push:

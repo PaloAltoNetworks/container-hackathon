@@ -1,4 +1,4 @@
-name: "App: Java Container Prod Build"
+name: "Prod Build: Java App Container"
 
 on:
   pull_request:

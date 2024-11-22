@@ -1,4 +1,4 @@
-name: "Base Image: Java - Dev Build"
+name: "Dev Build: Java Base Image"
 
 on:
   push: 
