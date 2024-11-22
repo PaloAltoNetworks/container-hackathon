@@ -40,20 +40,6 @@ jobs:
               working-directory: ${{ env.containerpath }}      
               run: | 
                 docker build --target $environment -t ${{ env.registry_name }}/$(basename $containerpath):$environment-$imagetag .
-                #docker tag $(basename $containerpath):$environment-$imagetag ${{ env.registry_name }}/$(basename $containerpath):$environment-$imagetag
-
-            - name: Install Twistlock
-              id: download-twistlock
-              working-directory: ${{ env.containerpath }}
-              run: | 
-                sudo curl -k -u ${{ secrets.PC_KEY }}:${{ secrets.PC_SECRET }} -L -o twistcli ${{ secrets.PC_CONSOLE }}/api/v1/util/twistcli
-                sudo chmod a+x ./twistcli
-
-            - name: Prisma Cloud Dev Image Scan
-              id: image-scan-dev
-              working-directory: ${{ env.containerpath }}
-              run: | 
-                sudo ./twistcli images scan --address ${{ secrets.PC_CONSOLE }} --user ${{ secrets.PC_KEY }} --password ${{ secrets.PC_SECRET }} --details --job ${{ github.run_id }} --build ${{ github.workspace }} ${{ env.registry_name }}/$(basename $containerpath):$environment-$imagetag         
 
             - name: Push Images to Container Registry
               run: |
