@@ -1,6 +1,9 @@
 #  Secure Container Deployment Hackathon
 
-This repository is used to support the 2-day Secure Container Deployment hackathon. If you are interested in having this event run at your organization, please reach out to your friendly Palo Alto team for more details. There is no cost for running this workshop. 
+This repository is used to support the 2-day Secure Container Deployment hackathon. If you are interested in having this event run at your organization :office:, please reach out to your friendly Palo Alto team :trollface: for more details. 
+
+> [!NOTE]
+> :partying_face: There is no cost for running this workshop. :partying_face:
 
 ## Scenario
 You work for PC Corp as a member of the information security team. Internal and external developers are constantly updating applications and recently there have been several critical issues related to vulnerable container deployments. New sales contracts are also requiring changes to the current operating procedures at PC Corp. The ratio of developers to security professionals at PC Corp is 100:1 so you must leverage tools that can scale to help bridge the gap in workload distribution. 
