@@ -1,0 +1,43 @@
+name: "Prod Build: Java Base Image"
+
+on:
+  pull_request:
+    paths: 
+        - 'baseimages/java/**'
+
+jobs:
+    build:
+        name: "Prod Image Build"
+        runs-on: ubuntu-latest
+        env:
+            environment: prod    
+            imagetag: "latest"
+            containerpath: "baseimages/java"
+            registry: "ghcr.io/${{ github.repository_owner }}"
+        permissions: 
+            contents: read
+            packages: write
+            attestations: write
+            id-token: write
+        steps:
+            - uses: actions/checkout@v4
+                
+            - name: Docker Login
+              uses: azure/docker-login@v2
+              with:
+                login-server: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Convert Organization Name to Lowercase
+              run: echo "registry_name=$(echo $registry | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV                        
+
+            - name: Build and Tag Prod Image
+              id: container-build-prod
+              working-directory: ${{ env.containerpath }}
+              run: |      
+                docker build --target $environment -t ${{ env.registry_name }}/$(basename $containerpath):$imagetag .
+
+            - name: Push Images to Container Registry
+              run: |
+                docker push ${{ env.registry_name }}/$(basename $containerpath):$imagetag

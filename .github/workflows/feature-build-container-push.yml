@@ -1,0 +1,41 @@
+name: "Dev Build: Java App Container"
+
+on:
+  push:
+    branches-ignore: 
+      - main
+    paths: 
+      - 'containers/javaapp/**'
+
+jobs:
+    build:
+        name: "Dev Image Build"
+        runs-on: ubuntu-latest
+        permissions: 
+          contents: read
+          packages: write
+          attestations: write
+          id-token: write        
+        env:
+          environment: dev
+          imagetag: ${{ github.sha }}
+          containerpath: "containers/javaapp"
+          registry: "ghcr.io/${{ github.repository_owner }}"
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Docker Login
+              uses: azure/docker-login@v2
+              with:
+                login-server: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}                
+
+            - name: Convert Organization Name to Lowercase
+              run: echo "registry_name=$(echo $registry | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV  
+
+            - name: Build and Tag Image
+              id: container-build
+              working-directory: ${{ env.containerpath }}
+              run: | 
+                docker build --target $environment -t ${{ env.registry_name }}/$(basename $containerpath):$imagetag .
