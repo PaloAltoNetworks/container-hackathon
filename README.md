@@ -2,6 +2,7 @@
 
 This repository is used to support the 2-day Secure Container Deployment hackathon. Groups of people will work together in teams to work through challenges. Challenges are open-ended with different pathways to success and different teams may come up with different solutions.
 
+> :grey_exclamation:
 > If you are interested in having this event run at your organization, please reach out to your local Palo Alto Networks team for details.
 
 ## Scenario
@@ -17,7 +18,7 @@ You work for PC Corp as a member of the information security team. Internal and 
 * Clone this repo to the team leads GitHub account :file_folder:
 * Work together to solve challenges as they are presented by the event proctor :man_teacher: :woman_teacher:
 
-> [!TIP]
+> :bulb:
 > Having users with diverse backgrounds yields the most interesting results in solving increasingly complex challenges.
 > The most successful teams contain people from different departments, with different skill sets, and different points of views.
 
