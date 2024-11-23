@@ -18,8 +18,6 @@ You work for PC Corp as a member of the information security team. Internal and 
 * Work together to solve challenges as they are presented by the event proctor :man_teacher: :woman_teacher:
 
 > [!TIP]
->
-
 > Having users with diverse backgrounds yields the most interesting results in solving increasingly complex challenges.
 > The most successful teams contain people from different departments, with different skill sets, and different points of views.
 
