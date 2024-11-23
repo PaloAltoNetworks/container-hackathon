@@ -10,6 +10,15 @@ You work for PC Corp as a member of the information security team. Internal and 
 * :octocat: GitHub Account
 
 ## Setup
+* Pair off in teams of 4-7 :busts_in_silhouette:
+* Choose 1 user in the group to be the team lead :scream_cat:
+* Clone this repo to the team leads GitHub account
+* Work together to solve challenges as they are presented by the event proctor :man_teacher: / :woman_teacher:
+
+> [!NOTE]
+> When possible it is recommended to have teams with blended skills.
+> The most successful teams have users from infosec, development, operations, etc.
+
 Groups of people will work together as a team to work through challenges. Challenges are open-ended with different pathways to success. Different teams may come up with different solutions.
 
 ## Outcomes
