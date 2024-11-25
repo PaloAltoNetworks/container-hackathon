@@ -38,4 +38,8 @@ jobs:
               id: container-build
               working-directory: ${{ env.containerpath }}
               run: | 
-                docker build --target $environment -t ${{ env.registry_name }}/$(basename $containerpath):$imagetag .
+                docker build --target $environment -t ${{ env.registry_name }}/$(basename $containerpath):$environment-$imagetag .
+
+            - name: Push Images to Container Registry
+              run: |
+                docker push ${{ env.registry_name }}/$(basename $containerpath):$environment-$imagetag
