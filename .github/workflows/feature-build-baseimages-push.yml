@@ -22,10 +22,10 @@ jobs:
           containerpath: "baseimages/java"
           registry: "ghcr.io/${{ github.repository_owner }}"
         steps:
-            - uses: actions/checkout@v4            
+            - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
             - name: Docker Login
-              uses: azure/docker-login@v2
+              uses: azure/docker-login@15c4aadf093404726ab2ff205b2cdd33fa6d054c # v2
               with:
                 login-server: ghcr.io
                 username: ${{ github.actor }}
